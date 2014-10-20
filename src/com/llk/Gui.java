@@ -13,7 +13,7 @@ public class Gui{
 	
 	}
 }
-class MainGui extends Frame{
+class MainGui extends JFrame{
 	private GridLayout grid1 = new GridLayout(10,8);
 	public static Location first_loc = new Location();
 	public static Location second_loc = new Location();
@@ -25,14 +25,19 @@ class MainGui extends Frame{
 	
 	
 	public MainGui (int level){
+		//初始化图片
+		imageinit();
 		//初始化显示对象
 		for(int i=0;i < temp.length;i++){
 			for(int j = 0;j< temp[i].length;j++){
-				temp[i][j] = new Picture(i*temp[i].length + j,j);//此处定义了类型和ID
+				//temp[i][j] = new Picture(i*temp[i].length + j,j);//此处定义了类型和ID
+				temp[i][j] = new Picture(j,images[j]);
+				temp[i][j].type = j;
 				temp[i][j].lp.x = i;
 				temp[i][j].lp.y = j;
 				temp[i][j].colour = 0;
 				temp[i][j].state = false;
+				//temp[i][j].add(images[i]);;
 			}	
 		}
 		//随机交换两个位置，此处应该要能设置选用的数字个数（图片种类）	
@@ -163,12 +168,20 @@ class MainGui extends Frame{
 		System.out.println("5");
 	}
 	public static void imageinit(){
-		
-		
+		images[0] = new ImageIcon("./src/images/500px.png");
+		images[1] = new ImageIcon("./src/images/ADN.png");
+		images[2] = new ImageIcon("./src/images/Behance.png");
+		images[3] = new ImageIcon("./src/images/Facebook.png");
+		images[4] = new ImageIcon("./src/images/GitHub.png");
+		images[5] = new ImageIcon("./src/images/LastFm.png");
+		images[6] = new ImageIcon("./src/images/LinkedIn.png");
+		images[7] = new ImageIcon("./src/images/StackOverflow.png");
+		images[8] = new ImageIcon("./src/images/Tumblr.png");
+		images[9] = new ImageIcon("./src/images/Yelp.png");
 	}
 }	
 //Class Piture shows every button with picture 
-class Picture extends Button implements ActionListener{
+class Picture extends JButton implements ActionListener{
 
 	public static int count = 1;//此处务必定义为一个static 变量
 	public String  name;
@@ -180,6 +193,12 @@ class Picture extends Button implements ActionListener{
 	public boolean state;
 	//图片位置坐标
 	Location lp = new Location();
+	
+	public Picture(int type,ImageIcon icon){
+		super(String.valueOf(type),icon);
+		this.type = type;
+		this.addActionListener(this);
+	}
 	
 	public Picture() {
 		
